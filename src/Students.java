@@ -6,6 +6,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import net.proteanit.sql.DbUtils;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -30,7 +35,7 @@ public class Students extends javax.swing.JFrame {
         Get_Data();
     }
     private void Get_Data(){
-      String sql="select user_id as 'Student ID', fullname as 'Fullname', username as 'Username', facult as 'Facult' ,phone as 'Telephone' from users ";
+      String sql="select student_id as 'Student ID', student_name as 'Fullname', username as 'Username', facult as 'Facult',department as 'Department' , program as 'Program', phone as 'Telephone' from students ";
       try{       
          pst=con.prepareStatement(sql);
          rs= pst.executeQuery();
@@ -70,17 +75,22 @@ public class Students extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jLabel9 = new javax.swing.JLabel();
+        department = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        program = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
 
         jPanel1.setBackground(new java.awt.Color(0, 204, 102));
 
-        jLabel15.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
+        jLabel15.setFont(new java.awt.Font("Quicksand Medium", 0, 36)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(255, 255, 255));
         jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/images/group_52px_1.png"))); // NOI18N
-        jLabel15.setText(" Students");
+        jLabel15.setText("Students");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -164,6 +174,24 @@ public class Students extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
+        jLabel9.setText("Department");
+
+        department.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                departmentActionPerformed(evt);
+            }
+        });
+
+        jLabel10.setText("Program");
+
+        jButton2.setFont(new java.awt.Font("Quicksand", 0, 13)); // NOI18N
+        jButton2.setText("Report");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -178,17 +206,31 @@ public class Students extends javax.swing.JFrame {
                         .addGap(39, 39, 39)
                         .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(32, 32, 32)
-                        .addComponent(faculty)
-                        .addGap(47, 47, 47))
+                        .addComponent(faculty))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(131, 131, 131)
-                        .addComponent(jLabel2)
-                        .addGap(140, 140, 140)
-                        .addComponent(jLabel3)
-                        .addGap(138, 138, 138)
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 147, Short.MAX_VALUE)))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(131, 131, 131)
+                                .addComponent(jLabel2)
+                                .addGap(140, 140, 140)
+                                .addComponent(jLabel3)
+                                .addGap(138, 138, 138)
+                                .addComponent(jLabel4))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(207, 207, 207)
+                                        .addComponent(department, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(220, 220, 220)
+                                        .addComponent(jLabel9)))
+                                .addGap(50, 50, 50)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel10)
+                                    .addComponent(program, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(0, 179, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(phone, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
@@ -202,6 +244,8 @@ public class Students extends javax.swing.JFrame {
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
         );
@@ -222,12 +266,21 @@ public class Students extends javax.swing.JFrame {
                     .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(faculty, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(phone, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(jLabel10))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(department, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(program, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnupdate, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE))
         );
@@ -259,14 +312,16 @@ public class Students extends javax.swing.JFrame {
          try{ 
              con=javaconnection.ConnectDB();
           
-        String sql= "insert into users(fullname, username, password, facult,phone)  values (?,?,?,?,?)";
+        String sql= "insert into students(facult, department, student_name, program,username,password,phone)  values (?,?,?,?,?,?,?)";
 
             pst=con.prepareStatement(sql);
-            pst.setString(1,fullname.getText());
-            pst.setString(2,username.getText());
-            pst.setString(3,password.getText());
-            pst.setString(4,faculty.getText());
-            pst.setString(5,phone.getText());
+            pst.setString(1,faculty.getText());
+            pst.setString(2,department.getText());
+            pst.setString(3,fullname.getText());
+            pst.setString(4,program.getText());
+            pst.setString(5,username.getText());
+            pst.setString(6,password.getText());
+            pst.setString(7,phone.getText());
 
             pst.execute();
              JOptionPane.showMessageDialog(this,"Successfully saved","Record",JOptionPane.INFORMATION_MESSAGE);
@@ -285,7 +340,7 @@ public class Students extends javax.swing.JFrame {
         // TODO add your handling code here:
         try{        
            con=javaconnection.ConnectDB();
-          String sql= "update users set fullname='"+ fullname.getText() + "',username='"+ username.getText() + "',password='"+ password.getText() + "',facult='"+ faculty.getText() + "',phone='"+ phone.getText() + "' where username='" + username.getText() + "'";   
+          String sql= "update students set student_name='"+ fullname.getText() + "',username='"+ username.getText() + "',password='"+ password.getText() + "',facult='"+ faculty.getText() + "',department='"+ department.getText() + "' ,phone='"+ phone.getText() + "' where username='" + username.getText() + "'";   
           pst=con.prepareStatement(sql);          
           pst.execute();             
           JOptionPane.showMessageDialog(this,"Successfully updated","Student Record",JOptionPane.INFORMATION_MESSAGE);    
@@ -300,7 +355,7 @@ public class Students extends javax.swing.JFrame {
         // TODO add your handling code here:
           try{        
            con=javaconnection.ConnectDB();
-          String sql= "delete from users where username='"+ username.getText() + "'";   
+          String sql= "delete from students where username='"+ username.getText() + "'";   
           pst=con.prepareStatement(sql);          
           pst.execute();             
           JOptionPane.showMessageDialog(this,"Successfully Deleted","Users Record",JOptionPane.INFORMATION_MESSAGE);    
@@ -318,7 +373,25 @@ public class Students extends javax.swing.JFrame {
             password.setText("");
             faculty.setText("");
             phone.setText("");
+            department.setText("");
+            program.setText("");
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void departmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_departmentActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_departmentActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        try{
+            String report="/Users/ameinabdi/Documents/School-Management-System-Inspiration-master/src/Students.jrxml";
+            JasperReport jr = JasperCompileManager.compileReport(report);
+            JasperPrint jp = JasperFillManager.fillReport(jr,null,con);
+            JasperViewer.viewReport(jp);
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -358,23 +431,28 @@ public class Students extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnupdate;
+    private javax.swing.JTextField department;
     private javax.swing.JTextField faculty;
     private javax.swing.JTextField fullname;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField password;
     private javax.swing.JTextField phone;
+    private javax.swing.JTextField program;
     private javax.swing.JTextField username;
     // End of variables declaration//GEN-END:variables
 }

@@ -11,8 +11,7 @@ public class javaconnection {
     try {
       Class.forName("com.mysql.jdbc.Driver");
      Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/amouduniversity","root","");
-    JOptionPane.showMessageDialog(null, "Connected");
-     
+      
      
      return conn;
      
